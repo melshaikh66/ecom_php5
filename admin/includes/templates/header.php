@@ -7,8 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="<?php echo $css; ?>bootstrap.min.css">
     <link rel="stylesheet" href="<?php echo $css; ?>all.min.css">
+    <link rel="stylesheet" href="<?php echo $css; ?>jquery-ui.min.css">
+    <link rel="stylesheet" href="<?php echo $css; ?>jquery.selectBoxIt.css">
     <link rel="stylesheet" href="<?php echo $css; ?>admin.css">
-    <title><?php getTitle() ?></title>
+    <title><?php getTitle()?></title>
 </head>
 
 <body>

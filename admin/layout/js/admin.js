@@ -1,4 +1,8 @@
 $(document).ready(function() {
+  // Trigger the select box it
+  $("select").selectBoxIt({
+    autoWidth: false
+  });
   // Hide placeholder on foucs
 
   $("[placeholder]")
@@ -29,5 +33,22 @@ $(document).ready(function() {
   // confirmation message on delete
   $(".confirm").click(function() {
     return confirm("Are you sure? ");
+  });
+  // category veiw option
+  $(".cat h4").click(function() {
+    $(this)
+      .next(".full-veiw")
+      .fadeToggle(500);
+  });
+  $(".options span").click(function() {
+    $(this)
+      .addClass("active")
+      .siblings("span")
+      .removeClass("active");
+    if ($(this).data("view") === "full") {
+      $(".cat .full-veiw").fadeIn(200);
+    } else {
+      $(".cat .full-veiw").fadeOut(200);
+    }
   });
 });
