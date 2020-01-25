@@ -21,7 +21,7 @@ if (isset($_SESSION['username'])) {
 
     } elseif ($do == "edit") {
 
-    } elseif ($do == 'Update') {
+    } elseif ($do == 'update') {
 
     } elseif ($do == "delete") {
 

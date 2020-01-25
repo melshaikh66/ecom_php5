@@ -4,7 +4,7 @@
 ==== Manage members page ===========
 ==== add | delete | edit ===========
 ==================================*/
-
+ob_start();
 session_start();
 
 $pageTitle = "Members";
@@ -370,3 +370,5 @@ if (isset($_SESSION['username'])) {
 
     exit();
 }
+ob_end_flush();
+?>

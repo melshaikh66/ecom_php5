@@ -80,7 +80,15 @@ body {
   color: #fff;
   border-radius: .7rem;
 }
-
+.home-stats .stat i {
+  font-size: 70px;
+  position: absolute;
+  top: 45px;
+  left: 35px;
+}
+.home-stats .stat .info{
+  float: right;
+}
 .home-stats .stat a {
   color: #fff;
 }
@@ -113,7 +121,13 @@ body {
 .latest {
   margin-top: 2rem;
 }
-
+.latest .toggle-info{
+  color: #999;
+  cursor: pointer;
+}
+.latest .toggle-info:hover{
+  color: #444;
+}
 .latest-users {
   margin-bottom: 0;
 }
@@ -126,9 +140,37 @@ body {
 .latest-users li:nth-child(odd) {
   background-color: #eee;
 }
-
-.latest-users li span {}
-
+.latest .comment-box {
+  margin: 5px 0 10px;
+}
+.latest .comment-box .user-name,
+.latest .comment-box .user-com{
+  display: inline-block;
+}
+.latest .comment-box .user-name {
+  width: 80px;
+  margin-right: 20px;
+  position: relative;
+  top: 10px;
+}
+.latest .comment-box .user-com{
+  width: calc(100% - 100px);
+  background-color: #eee;
+  padding: 10px;
+  position: relative;
+}
+.latest .comment-box .user-com::before{
+  position: absolute;
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  left: -29px;
+  top: 5px;
+  border-style: solid;
+  border-color: transparent #eee transparent transparent;
+  border-width: 15px;
+}
 /* end dashboard page */
 /* start members page  */
 h1 {

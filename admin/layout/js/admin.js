@@ -1,4 +1,15 @@
 $(document).ready(function() {
+
+  // dashboard
+
+  $(".toggle-info").click(function(){
+    $(this).toggleClass("selected").parent().next(".latest-users").fadeToggle(100); 
+    if ($(this).hasClass("selected")){
+      $(this).html("<i class='fa fa-plus fa-lg'></i>");
+    } else {
+      $(this).html("<i class='fa fa-minus fa-lg'></i>");
+    }
+  });
   // Trigger the select box it
   $("select").selectBoxIt({
     autoWidth: false

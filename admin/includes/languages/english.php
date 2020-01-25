@@ -13,6 +13,7 @@ function lang($phrase)
         "ITEMS" => "Items",
         "MEMBERS" => "Members",
         "STATISTICS" => "Statistics",
+        "COMMENTS" => "Comments",
         "LOGS" => "Logs",
     );
 
