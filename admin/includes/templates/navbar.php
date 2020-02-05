@@ -41,6 +41,9 @@ if (isset($_SESSION['username'])) {
 
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                           <a class="dropdown-item"
+                            href="../index.php"><?php echo lang("Visit-Shop") ?>
+                        </a>
                         <a class="dropdown-item"
                             href="members.php?do=edit&userid=<?php echo $_SESSION['ID'] ?>"><?php echo lang("EDITING_PROFILE") ?>
                         </a>

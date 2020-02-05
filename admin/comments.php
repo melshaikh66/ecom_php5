@@ -32,6 +32,7 @@ if (isset($_SESSION['username'])) {
                                         users.UserID = comments.User_ID ");
         $stmt->execute();
         $rows = $stmt->fetchAll();
+        if (!empty($rows)){
 ?>
 <h1 class="text-center">Manage Comments</h1>
 <div class="container">
@@ -72,7 +73,11 @@ if (isset($_SESSION['username'])) {
     </div>
 </div>
 <?php
-
+        }else {
+    echo "<div class='container'>";
+    echo "<div class='nice-message' >There is no comments to show</div>" ; 
+    echo "</div>";
+}
     } elseif ($do == "edit") {
 
         $comid = isset($_GET['comid']) && is_numeric($_GET['comid']) ? intval($_GET['comid']) : 0;

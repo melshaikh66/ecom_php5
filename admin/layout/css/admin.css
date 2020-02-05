@@ -34,6 +34,12 @@ body {
 .login .btn {
   background-color: #008dde;
 }
+.nice-message {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #fff;
+    border-left: 5px solid #080;
+}
 
 /* end login form */
 /* start bootstrap edits */
@@ -170,6 +176,10 @@ body {
   border-style: solid;
   border-color: transparent #eee transparent transparent;
   border-width: 15px;
+}
+.latest .comment-box .user-com a,
+.latest .comment-box .user-com span {
+  margin-top: 20px;
 }
 /* end dashboard page */
 /* start members page  */

@@ -2,13 +2,12 @@
 session_start();
 if (isset($_SESSION['username'])) {
     header("Location: dashboard.php");
-
 }
 // incloude the init file
 include "init.php";
 // no nav bar variable
 $noNavbar = "";
-// page title variable 
+// page title variable
 $pageTitle = "Login";
 // check if user coming from HTTP Post request
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -16,15 +15,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST["pass"];
     $hashedPass = sha1($password);
 // chech if user exist in database
-    $stmt = $con->prepare("SELECT 
-                                UserID,  Username, Password 
-                            FROM 
-                                users 
-                            WHERE 
-                                Username = ? 
-                            AND 
-                                Password = ? 
-                            AND 
+    $stmt = $con->prepare("SELECT
+                                UserID,  Username, Password
+                            FROM
+                                users
+                            WHERE
+                                Username = ?
+                            AND
+                                Password = ?
+                            AND
                                 GroupID = 1
                             LIMIT 1"
                         );

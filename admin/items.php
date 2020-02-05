@@ -24,7 +24,7 @@ INNER JOIN users ON users.UserID = items.Member_ID;");
         $stmt->execute();
         
         $items = $stmt->fetchAll();
-        
+       if (!empty($items)) {
         ?>
 <h1 class="text-center">Manage Items</h1>
 <div class="container">
@@ -68,7 +68,12 @@ INNER JOIN users ON users.UserID = items.Member_ID;");
     <a href='items.php?do=add' class='btn btn-primary btn-sm'><i class="fa fa-plus"></i> Add new item</a>
 </div>
 <?php
-
+       } else {
+    echo "<div class='container'>";
+    echo "<div class='nice-message' >There is no Items to show</div>" ; 
+    echo "<a href='items.php?do=add' class='btn btn-primary btn-sm'><i class='fa fa-plus'></i> Add new item</a>";
+    echo "</div>";
+}
     } elseif ($do == "add") { // add item page ?>
 <h1 class="text-center">Add New Item</h1>
 <div class="container">

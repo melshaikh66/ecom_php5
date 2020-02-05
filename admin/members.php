@@ -21,12 +21,12 @@ if (isset($_SESSION['username'])) {
 
     if ($do == "manage") { // manage page
 
-        $stmt = $con->prepare("SELECT * FROM users WHERE GroupID != 1 $query");
+        $stmt = $con->prepare("SELECT * FROM users WHERE GroupID != 1 ORDER BY UserID desc $query");
 
         $stmt->execute();
 
         $rows = $stmt->fetchAll();
-
+if (!empty($rows)){
         ?>
 <h1 class="text-center">Manage Members</h1>
 <div class="container">
@@ -67,7 +67,13 @@ if (isset($_SESSION['username'])) {
     </div>
     <a href='members.php?do=add' class='btn btn-primary btn-sm'><i class="fa fa-plus"></i> Add new member</a>
 </div>
-<?php } elseif ($do == "add") { // Add page ?>
+<?php } else {
+    echo "<div class='container'>";
+    echo "<div class='nice-message' >There is no Members to show</div>" ; 
+    echo "<a href='members.php?do=add' class='btn btn-primary btn-sm'><i class='fa fa-plus'></i> Add new member</a>";
+    echo "</div>";
+}
+ } elseif ($do == "add") { // Add page ?>
 
 <h1 class="text-center">Add Member</h1>
 <div class="container">
@@ -80,8 +86,8 @@ if (isset($_SESSION['username'])) {
                     placeholder="Username to login" />
             </div>
         </div>
-        <!-- end user name feild -->
-        <!-- start password feild -->
+        <!-- end user name field -->
+        <!-- start password field -->
         <div class="form-group row">
             <label for="" class="col-form-label control-label col-sm-3 text-capitalize">Password</label>
             <div class="col-9 col-md-6">
@@ -99,8 +105,8 @@ if (isset($_SESSION['username'])) {
                     placeholder="Email address" />
             </div>
         </div>
-        <!-- end Email feild -->
-        <!-- start full name feild -->
+        <!-- end Email field -->
+        <!-- start full name field -->
         <div class="form-group row">
             <label for="" class="col-form-label control-label col-sm-3 text-capitalize">Full name</label>
             <div class="col-9 col-md-6">
@@ -306,6 +312,14 @@ if (isset($_SESSION['username'])) {
 
             // check if there is no errors update the database
             if (empty($formErrors)) {
+                
+                $stmt2 = $con->prepare("SELECT * FROM users WHERE Username = ? AND UserID != ?");
+                $stmt2 ->execute(array($user, $id));
+                $count = $stmt2->rowCount();
+                if ($count == 1){
+                     $theMsg = "<div class='alert alert-danger'>Sorry this User is Exist</div>";
+                    redirectHome($theMsg, "back");
+                } else{
                 // update the database
                 $stmt = $con->prepare("UPDATE users SET Username = ?, Email = ?, FullName = ?, Password = ? WHERE UserID = ?");
                 $stmt->execute(array($user, $email, $name, $pass, $id));
@@ -313,7 +327,7 @@ if (isset($_SESSION['username'])) {
 
                 $theMsg = "<div class='alert alert-success'>" . $stmt->rowCount() . " Records Updated</div>";
                 redirectHome($theMsg, "back");
-
+                }
             }
         } else {
             $theMsg = "<div class='alert alert-danger'>You can't browse this page directly</div>";

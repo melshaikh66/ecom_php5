@@ -60,7 +60,7 @@ if (isset($_SESSION['username'])) {
                 	<i class="fa fa-comments"></i>
                     <div class="info">
                     Total Comments
-                    <span><?php echo countItems("C_ID", "comments") ?></span>
+                    <span><a href="comments.php"><?php echo countItems("C_ID", "comments") ?></a></span>
                     </div>
                     <div class='clearfix'></div>
                 </div>
@@ -79,21 +79,24 @@ if (isset($_SESSION['username'])) {
                         </h5>
                         <ul class="list-group list-group-flush latest-users">
                             <?php
-                              foreach ($latestUsers as $user) {
-                                  echo "<li class='list-group-item text-capitalize'>";
-                                     echo $user["Username"] ;
-                                     echo "<a href='members.php?do=edit&userid="
+                            if (! empty($latestUsers)) {
+                                foreach ($latestUsers as $user) {
+                                    echo "<li class='list-group-item text-capitalize'>";
+                                    echo $user["Username"] ;
+                                    echo "<a href='members.php?do=edit&userid="
                                    . $user['UserID']."'>  ";
-                                       echo "<span class='btn btn-success btn-sm float-right'>";
-                                           echo "<i class='fa fa-edit'></i>  Edit";
-                                           if ($user['RegStatus'] == 0) {
-
-                                               echo "<a href='members.php?do=approve&userid=" . $user['UserID'] . "' class='float-right btn btn-warning approve btn-sm'><i class='far fa-thumbs-up'></i> Approve</a>";
-                                           }
-                                        echo "</span>";
-                                      echo "</a>";
-                                   echo "</li>";
-                              }
+                                    echo "<span class='btn btn-success btn-sm float-right'>";
+                                    echo "<i class='fa fa-edit'></i>  Edit";
+                                    if ($user['RegStatus'] == 0) {
+                                        echo "<a href='members.php?do=approve&userid=" . $user['UserID'] . "' class='float-right btn btn-warning approve btn-sm'><i class='far fa-thumbs-up'></i> Approve</a>";
+                                    }
+                                    echo "</span>";
+                                    echo "</a>";
+                                    echo "</li>";
+                                }
+                            } else {
+                                echo "There's no records to show";
+                            }
                               ?>
                         </ul>
                     </div>
@@ -105,21 +108,25 @@ if (isset($_SESSION['username'])) {
                         <h5 class="card-title"><i class="fa fa-tag"></i> Latest <?php echo $numUsers ?> Items Added <span class="float-right toggle-info"><i class="fa fa-minus fa-lg"></i> </span></h5>
                             <ul class="list-group list-group-flush latest-users">
                             <?php
-                              foreach ($latestItems as $item) {
-                                  echo "<li class='list-group-item text-capitalize'>";
-                                        echo $item["Name"] ;
-                                         echo "<a href='items.php?do=edit&itemid="
-                                            . $item["Item_ID"]."'>  ";
-                                       echo "<span class='btn btn-success btn-sm float-right'>";
-                                           echo "<i class='fa fa-edit'></i>  Edit";
-                                           if ($item['Approve'] == 0) {
 
-                                               echo "<a href='items.php?do=approve&itemid=" . $item["Item_ID"]. "' class='float-right btn btn-warning approve btn-sm'><i class='far fa-thumbs-up'></i> Approve</a>";
-                                           }
-                                        echo "</span>";
-                                      echo "</a>";
-                                   echo "</li>";
-                              }
+                            if (! empty($latestItems)) {
+                                foreach ($latestItems as $item) {
+                                    echo "<li class='list-group-item text-capitalize'>";
+                                    echo $item["Name"] ;
+                                    echo "<a href='items.php?do=edit&itemid="
+                                            . $item["Item_ID"]."'>  ";
+                                    echo "<span class='btn btn-success btn-sm float-right'>";
+                                    echo "<i class='fa fa-edit'></i>  Edit";
+                                    if ($item['Approve'] == 0) {
+                                        echo "<a href='items.php?do=approve&itemid=" . $item["Item_ID"]. "' class='float-right btn btn-warning approve btn-sm'><i class='far fa-thumbs-up'></i> Approve</a>";
+                                    }
+                                    echo "</span>";
+                                    echo "</a>";
+                                    echo "</li>";
+                                }
+                            } else {
+                                echo "There's no records to show";
+                            }
                               ?>
                         </ul>
                     </div>
@@ -140,18 +147,32 @@ if (isset($_SESSION['username'])) {
                                                 INNER JOIN
                                                         users
                                                 ON
-                                                        users.UserID = comments.User_ID");
+                                                        users.UserID = comments.User_ID
+                                                ORDER BY
+                                                        C_ID desc
+                                                LIMIT  
+                                                        $numComments");
                         $stmt->execute();
                         $comments = $stmt->fetchAll();
                         if (!empty($comments)){
                             foreach($comments as $comment){
                                 echo '<div class="comment-box">';
                                     echo '<span class="user-name float-left text-center">' .$comment["Username"] . '</span>';
-                                    echo '<p class="user-com">' .$comment["Comment"] . '</p>';
+                                    echo '<p class="user-com">' .$comment["Comment"] ;
+                                    echo "<a href='comments.php?do=edit&comid="
+                                    . $comment['C_ID']."'>  ";
+                                     echo "<span class='btn btn-success btn-sm float-right'>";
+                                     echo "<i class='fa fa-edit'></i>  Edit";
+                                     if ($comment['Status'] == 0) {
+                                         echo "<a href='comments.php?do=approve&comid=" . $comment['C_ID'] . "' class='float-right btn btn-warning approve btn-sm'><i class='far fa-thumbs-up'></i> Approve</a>";
+                                     }
+                                     echo "</span>";
+                                     echo "</a>";
+                                     echo '</p>';
                                 echo '</div>';
                             }
                         } else {
-                            echo "There is no comments";
+                            echo "There's no records to show";
                         }
                     ?>
                         </ul>

@@ -1,0 +1,143 @@
+/* start main rules */
+body {
+  background-color: #f4f4f4;
+  font-size: 16px;
+}
+
+h1 {
+  font-size: 2rem;
+  margin: 40px 0;
+  font-weight: bold;
+  color: #666;
+}
+
+.input-container {
+  position: relative;
+}
+
+.astrisk {
+  color: #e82e2e;
+  position: absolute;
+  right: 15px;
+  top: 6px;
+  font-size: 25px;
+}
+
+/* end main rules */
+/* start bootstrap edits */
+.navbar {
+  border-radius: 0;
+  margin-bottom: 0;
+}
+
+.navbar-brand {
+  font-size: 1em;
+}
+
+.navbar-dark .navbar-nav .nav-link:focus,
+.navbar-dark .navbar-nav .nav-link:hover,
+.dropdown-menu {
+  background-color: #3498db;
+}
+
+.dropdown-menu {
+  min-width: 12rem;
+  padding: 0;
+  font-size: 1em;
+  border: none;
+}
+
+.dropdown-item {
+  color: #fff;
+  padding: .5rem 1.5rem;
+}
+
+.dropdown-item:focus,
+.dropdown-item:hover {
+  background-color: #9b59b6;
+}
+
+.form-control {
+  position: relative;
+}
+
+/* end bootstrap edits */
+/* start header */
+.upper-bar {
+  padding: 10px;
+  background-color: #fff
+}
+
+/* end header */
+/* start login page */
+.login-page form {
+  max-width: 400px;
+  margin: auto;
+}
+
+.login-page form input {
+  margin-bottom: 10px;
+}
+
+.login-page [data-class="login"].selected {
+  color: #007bff
+}
+
+.login-page [data-class="signup"].selected {
+  color: #28a745
+}
+
+.login-page h1 {
+  color: #969696;
+}
+
+.login-page h1 span {
+  cursor: pointer;
+}
+
+.login-page .signup {
+  display: none;
+}
+
+.login-page .message {
+  max-width: 40px;
+  margin: auto;
+}
+
+/* end login page */
+/* start categories page */
+.item-box {
+  position: relative;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.item-box .price {
+  position: absolute;
+  padding: 5px 10px;
+  background-color: #5f625f;
+  color: #fff;
+  font-weight: bold;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  top: 10px;
+  left: 0;
+}
+
+/* end categories page */
+/* start profile page  */
+.block {
+  margin: 10px 0;
+}
+
+.block .list-group-item {
+  color: #333;
+  padding: 10px;
+}
+
+.block .list-group-item span {
+  display: inline-block;
+  width: 150px;
+}
+
+/* end profile page  */
