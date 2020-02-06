@@ -50,7 +50,7 @@ if (isset($_SESSION['member'])){
                 echo "</div>";
               }
             } else {
-              echo "There is no Ads to show";
+              echo "<div>There is no Ads to show . create <a href='newad.php'>New ad</a></div>";
             }
             ?>
           </div>

@@ -18,7 +18,8 @@
           <?php
           if (isset($_SESSION['member'])) {
             echo "Welcome ". $sessionUser . " " ;
-            echo "<a href='profile.php'>My Profile</a> ";
+            echo "<a href='profile.php'>My Profile</a> - ";
+            echo " <a href='newad.php'>New Ads</a> - ";
             echo " <a href='logout.php'>Logout</a>";
             $userStatus = checkUserStatus($sessionUser);
             if ($userStatus == 1 ){

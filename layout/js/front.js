@@ -34,4 +34,16 @@ $(document).ready(function() {
     return confirm("Are you sure? ");
   });
 
+  // live preview for adding ads
+
+  $(".live-name").keyup(function() {
+    $(".live-preview .card-title").text($(this).val());
+  });
+  $(".live-desc").keyup(function() {
+    $(".live-preview .card-text").text($(this).val());
+  });
+  $(".live-price").keyup(function() {
+    $(".live-preview .price").text("$" + $(this).val());
+  });
+
 });
