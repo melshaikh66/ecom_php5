@@ -23,6 +23,14 @@ h1 {
   font-size: 25px;
 }
 
+.main-form .astrisk {
+  color: #6e0397;
+  position: absolute;
+  right: 30px;
+  top: 6px;
+  font-size: 25px;
+}
+
 /* end main rules */
 /* start bootstrap edits */
 .navbar {

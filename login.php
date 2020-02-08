@@ -15,7 +15,7 @@
       $hashedPass = sha1($pass);
   // chech if user exist in database
       $stmt = $con->prepare("SELECT
-                                  Username, Password
+                                  UserID, Username, Password
                               FROM
                                   users
                               WHERE
@@ -23,11 +23,13 @@
                               AND
                                   Password = ? ");
       $stmt->execute(array($user, $hashedPass));
+      $get = $stmt->fetch();
       $count = $stmt->rowCount();
 
   //    If count > 0 this mean the database contain record for this username
       if ($count > 0) {
           $_SESSION['member'] = $user;   //register session user name
+          $_SESSION['member_id'] = $get['UserID'];
           header("Location: index.php");
           exit();
       }

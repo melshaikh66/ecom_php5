@@ -40,11 +40,12 @@ if (isset($_SESSION['member'])){
               foreach (getItems("Member_ID", $info['UserID']) as $item) {
                 echo "<div class='col-sm-6 col-lg-3'>";
                   echo "<div class='card item-box'>";
-                    echo "<span class='price'>" . $item['Price'] ."</span>";
+                    echo "<span class='price'>$" . $item['Price'] ."</span>";
                     echo "<img class='card-img-top img-fluid' src='layout/images/avatar.png' alt='avatar' />";
                     echo "<div class='card-body'>";
-                      echo "<h3 class='card-title'>". $item['Name'] ."</h3>";
+                      echo "<h3 class='card-title'><a href='item.php?itemid=". $item['Item_ID']."'>". $item['Name'] ."</a></h3>";
                       echo "<p class='card-text'>". $item['Description'] ."</p>";
+                      echo "<p class='card-text'>". $item['Add_Date'] ."</p>";
                     echo "</div>";
                   echo "</div>";
                 echo "</div>";

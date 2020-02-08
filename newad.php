@@ -1,9 +1,56 @@
 <?php
 session_start();
-$pageTitle = "Create new ad";
+$pageTitle = "Create new Item";
 // incloude the init file
 include "init.php";
 if (isset($_SESSION['member'])){
+  if ($_SERVER["REQUEST_METHOD"] == "POST"){
+    $formErrors   = array();
+
+    $title        = filter_var($_POST['name'], FILTER_SANITIZE_STRING);
+    $desc         = filter_var($_POST['description'], FILTER_SANITIZE_STRING);
+    $price        = filter_var($_POST['price'], FILTER_SANITIZE_NUMBER_INT);
+    $country      = filter_var($_POST['country'], FILTER_SANITIZE_STRING);
+    $status       = filter_var($_POST['status'], FILTER_SANITIZE_NUMBER_INT);
+    $cat          = filter_var($_POST['category'], FILTER_SANITIZE_NUMBER_INT);
+
+    if (strlen($title)< 4){
+      $formErrors[] = "Item name can't be less than 4 characters";
+    }
+    if (strlen($desc)< 10){
+      $formErrors[] = "Item description can't be less than 10 characters";
+    }
+    if (strlen($country)< 2){
+      $formErrors[] = "Item country can't be less than 2 characters";
+    }
+    if (empty($price)){
+      $formErrors[] = "Item price can't be empty";
+    }
+    if (empty($status)){
+      $formErrors[] = "Item status can't be empty";
+    }
+    if (empty($cat)){
+      $formErrors[] = "Item category can't be empty";
+    }
+
+    if (empty($formErrors)) {
+
+            // insert the user info to the database
+            $stmt = $con->prepare("INSERT INTO items(Name, Description, Price, Country,Status, Add_Date, Cat_ID, Member_ID)
+                                            VALUES(:zname, :zdesc, :zprice, :zcountry, :zstatus, now(), :zcat, :zmember)");
+            $stmt->execute(array(
+                "zname"     => $title,
+                "zdesc"     => $desc,
+                "zprice"    => $price,
+                "zcountry"  => $country,
+                "zstatus"   => $status,
+                "zcat"      => $cat,
+                "zmember"   => $_SESSION['member_id'],
+            ));
+            $theMsg = "<div class='alert alert-success'> Item Added successfully </div>";
+            redirectHome($theMsg, "back");
+          }
+        }
 ?>
   <h1 class="text-center text-capitalize"><? echo "Welcome: " . $_SESSION['member'];?></h1>
   <div class="new-ad block">
@@ -15,7 +62,7 @@ if (isset($_SESSION['member'])){
         <div class="card-body">
           <div class="row">
             <div class="col-lg-8">
-              <form class="form-horizontal" action="<?php echo $_SERVER['PHP_SELF'];?>" method="POST">
+              <form class="form-horizontal main-form" action="<?php echo $_SERVER['PHP_SELF'];?>" method="POST">
                   <!-- start name feild -->
                   <div class="form-group row">
                       <label for="" class="col-form-label control-label col-sm-3 text-capitalize">Name</label>
@@ -101,11 +148,19 @@ if (isset($_SESSION['member'])){
               </div>
             </div>
           </div>
+          <?php
+          if (! empty($formErrors)){
+            foreach ($formErrors as $error) {
+              echo "<div class='alert alert-danger'>" .$error."</div>";
+            }
+          }
+          ?>
         </div>
       </div>
     </div>
   </div>
 <?php
+
   } else {
     header("Location: login.php");
     exit();
