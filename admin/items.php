@@ -130,11 +130,8 @@ INNER JOIN users ON users.UserID = items.Member_ID;");
             <div class="col-9 col-md-6">
                <select name="member" id="">
                    <option value="0">...</option>
-          			<?php 
-          			$stmt = $con->prepare("SELECT * FROM users");
-          			$stmt->execute();
-          			$users = $stmt->fetchAll();
-          			
+                      <?php 
+                    $users = getAll("*", "users", "", "", "UserID", "ASC");
           			foreach ($users as $user) {
           			    echo "<option value='" .$user['UserID'] ."'>". $user['Username']."</option>";
           			}
@@ -150,19 +147,28 @@ INNER JOIN users ON users.UserID = items.Member_ID;");
             <div class="col-9 col-md-6">
                <select name="category" id="">
                    <option value="0">...</option>
-          			<?php 
-          			$stmt = $con->prepare("SELECT * FROM categories");
-          			$stmt->execute();
-          			$cats = $stmt->fetchAll();
-          			
-          			foreach ($cats as $cat) {
-          			    echo "<option value='" .$cat['ID'] ."'>". $cat['Name']."</option>";
-          			}
+                      <?php 
+                    $parentCats = getAll("*", "categories", "WHERE Parent = 0", "", "ID");
+          			foreach ($parentCats as $cat) :
+                          echo "<option value='" .$cat['ID'] ."'>". $cat['Name']."</option>";
+                          $childCats = getAll("*", "categories","WHERE Parent ={$cat['ID']}", "", "ID");
+                          foreach ($childCats as $child):
+                            echo "<option value='" .$child['ID'] ."'> ---". $child['Name']."</option>"; 
+                          endforeach;
+                    endforeach;
           			?>
                </select>
             </div>
         </div>
         <!-- end categories feild -->
+          <!-- start tags feild -->
+          <div class="form-group row">
+            <label for="" class="col-form-label control-label col-sm-3 text-capitalize">Tags</label>
+            <div class="col-9 col-md-6">
+                <input type="text" name="tags" class="form-control"  placeholder="separate with comma (,)" />
+            </div>
+        </div>
+        <!-- end tags feild -->
         <!-- start submit feild -->
         <div class="form-group row">
             <div class="offset-3 col-sm-10">
@@ -187,6 +193,7 @@ INNER JOIN users ON users.UserID = items.Member_ID;");
         $status     = $_POST['status'];
         $member     = $_POST['member'];
         $cat        = $_POST['category'];
+        $tags        = $_POST['tags'];
        
         // Validate the form
         
@@ -230,8 +237,8 @@ INNER JOIN users ON users.UserID = items.Member_ID;");
         if (empty($formErrors)) {
             
                 // insert the user info to the database
-                $stmt = $con->prepare("INSERT INTO items(Name, Description, Price, Country,Status, Add_Date, Cat_ID, Member_ID)
-                                                VALUES(:zname, :zdesc, :zprice, :zcountry, :zstatus, now(), :zcat, :zmember)");
+                $stmt = $con->prepare("INSERT INTO items(Name, Description, Price, Country,Status, Add_Date, Cat_ID, Member_ID, Tags)
+                                                VALUES(:zname, :zdesc, :zprice, :zcountry, :zstatus, now(), :zcat, :zmember, :ztags)");
                 $stmt->execute(array(
                     "zname"     => $name,
                     "zdesc"     => $desc,
@@ -240,6 +247,7 @@ INNER JOIN users ON users.UserID = items.Member_ID;");
                     "zstatus"   => $status,
                     "zcat"      => $cat,
                     "zmember"   => $member,
+                    "ztags"     => $tags,
                 ));
                 // echo success message
                 
@@ -356,6 +364,14 @@ INNER JOIN users ON users.UserID = items.Member_ID;");
             </div>
         </div>
         <!-- end categories feild -->
+        <!-- start tags feild -->
+        <div class="form-group row">
+            <label for="" class="col-form-label control-label col-sm-3 text-capitalize">Tags</label>
+            <div class="col-9 col-md-6">
+            <input type="text" name="tags" class="form-control"  placeholder="separate with comma (,)" value="<?php echo $item['Tags'] ?>" />
+            </div>
+        </div>
+        <!-- end tags feild -->
         <!-- start submit feild -->
         <div class="form-group row">
             <div class="offset-3 col-sm-10">
@@ -439,6 +455,7 @@ INNER JOIN users ON users.UserID = items.Member_ID;");
             $status     = $_POST['status'];
             $member     = $_POST['member'];
             $cat        = $_POST['category'];
+            $tags        = $_POST['tags'];
             
             // Validate the form
             
@@ -490,10 +507,11 @@ INNER JOIN users ON users.UserID = items.Member_ID;");
                                             Country = ?, 
                                             Status = ?,
                                             Cat_ID = ?,
-                                            Member_ID = ? 
+                                            Member_ID = ?, 
+                                            Tags = ?
                                         WHERE 
                                             Item_ID = ?");
-                $stmt->execute(array($name, $desc, $price, $country, $status, $cat, $member, $id));
+                $stmt->execute(array($name, $desc, $price, $country, $status, $cat, $member, $tags, $id));
                 // echo success message
                 
                 $theMsg = "<div class='alert alert-success'>" . $stmt->rowCount() . " Records Updated</div>";

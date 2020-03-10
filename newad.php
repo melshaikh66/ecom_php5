@@ -13,6 +13,7 @@ if (isset($_SESSION['member'])){
     $country      = filter_var($_POST['country'], FILTER_SANITIZE_STRING);
     $status       = filter_var($_POST['status'], FILTER_SANITIZE_NUMBER_INT);
     $cat          = filter_var($_POST['category'], FILTER_SANITIZE_NUMBER_INT);
+    $tags         = filter_var($_POST['tags'], FILTER_SANITIZE_STRING);
 
     if (strlen($title)< 4){
       $formErrors[] = "Item name can't be less than 4 characters";
@@ -36,8 +37,8 @@ if (isset($_SESSION['member'])){
     if (empty($formErrors)) {
 
             // insert the user info to the database
-            $stmt = $con->prepare("INSERT INTO items(Name, Description, Price, Country,Status, Add_Date, Cat_ID, Member_ID)
-                                            VALUES(:zname, :zdesc, :zprice, :zcountry, :zstatus, now(), :zcat, :zmember)");
+            $stmt = $con->prepare("INSERT INTO items(Name, Description, Price, Country,Status, Add_Date, Cat_ID, Member_ID, Tags)
+                                            VALUES(:zname, :zdesc, :zprice, :zcountry, :zstatus, now(), :zcat, :zmember, :ztags)");
             $stmt->execute(array(
                 "zname"     => $title,
                 "zdesc"     => $desc,
@@ -46,6 +47,7 @@ if (isset($_SESSION['member'])){
                 "zstatus"   => $status,
                 "zcat"      => $cat,
                 "zmember"   => $_SESSION['member_id'],
+                "ztags"     => $tags
             ));
             $theMsg = "<div class='alert alert-success'> Item Added successfully </div>";
             redirectHome($theMsg, "back");
@@ -116,10 +118,7 @@ if (isset($_SESSION['member'])){
                          <select name="category" id="">
                              <option value="0">...</option>
                     			<?php
-                    			$stmt = $con->prepare("SELECT * FROM categories");
-                    			$stmt->execute();
-                    			$cats = $stmt->fetchAll();
-
+                          $cats = getAll("*", "categories","", "", "ID", "ASC");
                     			foreach ($cats as $cat) {
                     			    echo "<option value='" .$cat['ID'] ."'>". $cat['Name']."</option>";
                     			}
@@ -128,6 +127,14 @@ if (isset($_SESSION['member'])){
                       </div>
                   </div>
                   <!-- end categories feild -->
+                  <!-- start tags feild -->
+                  <div class="form-group row">
+                      <label for="" class="col-form-label control-label col-sm-3 text-capitalize">Tags</label>
+                      <div class="col-9 col-md-9">
+                      <input type="text" name="tags" class="form-control"  placeholder="separate with comma (,)" />
+                      </div>
+                  </div>
+                  <!-- end tags feild -->
                   <!-- start submit feild -->
                   <div class="form-group row">
                       <div class="offset-3 col-sm-10">

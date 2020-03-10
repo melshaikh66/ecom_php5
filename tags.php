@@ -1,12 +1,12 @@
 <?php include "init.php"; ?>
   <div class="container">
-      <h1 class="text-capitalize text-center">Show Items</h1>
       <div class="row">
         <?php
           // $category = isset($_GET['pageid']) && is_numeric($_GET['pageid']) ? intval($_GET['pageid']) : 0;
-          if (isset($_GET['pageid']) && is_numeric($_GET['pageid'])):
-            $category = intval($_GET['pageid']); 
-            $items= getAll("*", "items","WHERE Cat_ID = {$category}", "AND Approve = 1", "Item_ID");
+          if (isset($_GET['name'])):
+            $tag = $_GET['name']; 
+            echo '<h1 class="text-center">'. $tag . '</h1>';
+            /* $items= getAll("*", "items","WHERE Cat_ID = {$category}", "AND Approve = 1", "Item_ID");
             foreach ($items as $item) {
               echo "<div class='col-sm-6 col-lg-3'>";
                 echo "<div class='card item-box'>";
@@ -19,7 +19,7 @@
                   echo "</div>";
                 echo "</div>";
               echo "</div>";
-            }
+            } */
         else:
           echo "<div class='container'>";
           $theMsg = "<div class='alert alert-danger'>There is no such ID</div>";

@@ -7,6 +7,8 @@ if (isset($_SESSION['member'])){
   $getUser = $con->prepare("SELECT * FROM users WHERE Username = ?");
   $getUser->execute(array($sessionUser));
   $info = $getUser->fetch();
+
+  $userid = $info['UserID'];
 ?>
   <h1 class="text-center text-capitalize"><? echo "Welcome: " . $_SESSION['member'];?></h1>
   <div class="information block">
@@ -23,11 +25,12 @@ if (isset($_SESSION['member'])){
            <li class="list-group-item"><i class="far fa-calendar-alt fa-fw"></i></i><?php echo "<span>Regester Date</span>: " . $info['Date']; ?></li>
            <li class="list-group-item"><i class="fa fa-tag fa-fw"></i><?php echo "<span>Favourite Category</span>: " . $info['Date']; ?></li>
          </ul>
+         <a href="#" class="btn btn-info">Edit Information</a>
         </div>
       </div>
     </div>
   </div>
-  <div class="my-ads block">
+  <div id="my-ads" class="my-ads block">
     <div class="container">
       <div class="card bg-light">
         <div class="card-header">
@@ -36,16 +39,20 @@ if (isset($_SESSION['member'])){
         <div class="card-body">
           <div class="row">
             <?php
-            if (! empty(getItems("Member_ID", $info['UserID']))){
-              foreach (getItems("Member_ID", $info['UserID']) as $item) {
+            $items = getAll("*", "items", "WHERE Member_ID = $userid", "", "Item_ID");
+            if (! empty($items)){
+              foreach ($items as $item) {
                 echo "<div class='col-sm-6 col-lg-3'>";
                   echo "<div class='card item-box'>";
+                    if ($item['Approve'] == 0 ){
+                      echo '<span class="non-approve">Not Approved</span>';
+                    }
                     echo "<span class='price'>$" . $item['Price'] ."</span>";
                     echo "<img class='card-img-top img-fluid' src='layout/images/avatar.png' alt='avatar' />";
                     echo "<div class='card-body'>";
                       echo "<h3 class='card-title'><a href='item.php?itemid=". $item['Item_ID']."'>". $item['Name'] ."</a></h3>";
                       echo "<p class='card-text'>". $item['Description'] ."</p>";
-                      echo "<p class='card-text'>". $item['Add_Date'] ."</p>";
+                      echo "<span class='date'>". $item['Add_Date'] ."</span>";
                     echo "</div>";
                   echo "</div>";
                 echo "</div>";
@@ -67,9 +74,7 @@ if (isset($_SESSION['member'])){
         </div>
         <div class="card-body">
           <?php
-              $stmt = $con->prepare("SELECT Comment FROM comments WHERE User_ID = ?  ");
-                  $stmt->execute(array($info['UserID']));
-                  $comments = $stmt->fetchAll();
+                  $comments = getAll("Comment", "comments", "WHERE User_ID = $userid", "", "C_ID"); 
                 if (! empty($comments)){
                   foreach ($comments as $comment ) {
                     echo  '<ul class="list-group list-group-flush">';

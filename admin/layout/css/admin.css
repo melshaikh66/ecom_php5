@@ -262,7 +262,11 @@ h1 {
   right: 10px;
 }
 
-.category .cat .hidden-buttons {
+.category .cat li:hover .hidden-buttons-child {
+  right: 10px;
+}
+.category .cat .hidden-buttons, 
+.category .cat .hidden-buttons-child  {
   -webkit-transition: all 0.5s ease-in-out;
   -moz-transition: all 0.5s ease-in-out;
   -o-transition: all 0.5s ease-in-out;
@@ -271,7 +275,12 @@ h1 {
   top: 25px;
   right: -225px;
 }
-
+.category .cat .hidden-buttons-child {
+  top: 9px;
+}
+.category .cat .hidden-buttons-child  a {
+  margin-right: 10px;
+}
 .category .cat .hidden-buttons a {
   margin-right: 10px;
 }
@@ -311,7 +320,10 @@ h1 {
 .category .cat .ads {
   background-color: #ff9f43;
 }
-
+.category .cat .full-veiw h6 {
+  margin-top: 15px;
+  color: #6a6a6a;
+}
 .category hr {
   margin-top: 0;
   margin-bottom: 0;

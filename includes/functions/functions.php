@@ -80,14 +80,14 @@ function countItems($items, $table) {
  * *function to get categories from database
  */
 
-function getCats() {
-    global $con;
+// function getCats() {
+//     global $con;
 
-    $getCat = $con->prepare("SELECT * FROM categories ORDER BY ID ASC ");
-    $getCat->execute();
-    $cats = $getCat->fetchAll();
-    return $cats;
-}
+//     $getCat = $con->prepare("SELECT * FROM categories ORDER BY ID ASC ");
+//     $getCat->execute();
+//     $cats = $getCat->fetchAll();
+//     return $cats;
+// }
 /*
 ** Check user status function v1.0
 **function check if the user is activated or not
@@ -112,11 +112,23 @@ function checkUserStatus ($user){
  * *function to get  items from database
  */
 
-function getItems($where, $value) {
-    global $con;
+// function getItems($where, $value, $approve = NULL) {
+//     global $con;
+//     $sql = $approve == NULL ? 'AND Approve = 1' : NULL ;
+//     $getItem = $con->prepare("SELECT * FROM items Where $where = ? $sql ORDER BY Item_ID DESC ");
+//     $getItem->execute(array($value));
+//     $items = $getItem->fetchAll();
+//     return $items;
+// }
+/* * get all items function v2.0
+* *function to get all records from database table 
+** $table => the name of the table
+*/
 
-    $getItem = $con->prepare("SELECT * FROM items Where $where = ? ORDER BY Item_ID DESC ");
-    $getItem->execute(array($value));
-    $items = $getItem->fetchAll();
-    return $items;
+function getAll($field, $table, $where = NULL, $and = NULL, $orderField, $ordering = "DESC") {
+   global $con;
+   $getAll = $con->prepare("SELECT $field FROM $table $where $and ORDER BY $orderField $ordering ");
+   $getAll->execute();
+   $all = $getAll->fetchAll();
+   return $all;
 }

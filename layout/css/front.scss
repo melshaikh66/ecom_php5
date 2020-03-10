@@ -30,7 +30,6 @@ h1 {
   top: 6px;
   font-size: 25px;
 }
-
 .custom-hr {
   border-top: 2px solid #c5c5c5;
 }
@@ -61,7 +60,7 @@ h1 {
 
 .dropdown-item {
   color: #fff;
-  padding: 0.5rem 1.5rem;
+  padding: .5rem 1.5rem;
 }
 
 .dropdown-item:focus,
@@ -91,12 +90,12 @@ h1 {
   margin-bottom: 10px;
 }
 
-.login-page [data-class=login].selected {
-  color: #007bff;
+.login-page [data-class="login"].selected {
+  color: #007bff
 }
 
-.login-page [data-class=signup].selected {
-  color: #28a745;
+.login-page [data-class="signup"].selected {
+  color: #28a745
 }
 
 .login-page h1 {
@@ -121,7 +120,6 @@ h1 {
 .home {
   margin-top: 30px;
 }
-
 /* end Home page */
 /* start categories page */
 .item-box {
@@ -141,7 +139,6 @@ h1 {
   top: 10px;
   left: 0;
 }
-
 .item-box .non-approve {
   position: absolute;
   top: 50px;
@@ -150,74 +147,67 @@ h1 {
   color: #fff;
   padding: 3px 10px;
 }
-
 .item-box .card-text {
   height: 50px;
   max-height: 50px;
 }
-
 .item-box .date {
   display: block;
   padding: 10px 0;
   color: #7f7f7f;
 }
-
 /* end categories page */
 /* start profile page  */
 .block {
   margin: 10px 0;
+  .list-group-item {
+    color: #333;
+    padding: 10px;
+    span {
+      display: inline-block;
+      width: 150px;
+    }
+  }
+  .btn {
+    margin-top: 10px;
+  }
 }
-.block .list-group-item {
-  color: #333;
-  padding: 10px;
-}
-.block .list-group-item span {
-  display: inline-block;
-  width: 150px;
-}
-.block .btn {
-  margin-top: 10px;
-}
+
+
 
 /* end profile page  */
 /* start item details page  */
-.info ul li:nth-child(odd) {
+.info ul li:nth-child(odd){
   background-color: #dbdbdb;
 }
-
 .info ul li span {
   display: inline-block;
   width: 150px;
 }
 
-.add-comment h3 {
+.add-comment h3{
   margin: 0 0 10px;
 }
-
 .add-comment textarea {
   display: block;
-  width: 500px;
+  width: 500px ;
   height: 120px;
   margin-bottom: 10px;
 }
-
 .comment-box {
   margin-bottom: 20px;
 }
-
 .comment-box img {
   max-width: 100px;
   display: block;
   margin-bottom: 10px;
 }
-
 .comment-box .lead {
   background-color: #dbdbdb;
   position: relative;
   padding: 10px;
 }
-
-.comment-box .lead::before {
+.comment-box .lead::before{
   content: "";
   width: 0;
   height: 0;
@@ -228,7 +218,4 @@ h1 {
   top: 10px;
   left: -30px;
 }
-
 /* end item details page  */
-
-/*# sourceMappingURL=front.css.map */

@@ -1,5 +1,19 @@
 <?php
 
+/* get all items function v2.0
+** function to get all records from database table 
+** $table => the name of the table
+*/
+
+function getAll($field, $table, $where = NULL, $and = NULL, $orderField, $ordering = "DESC") {
+    global $con;
+    $getAll = $con->prepare("SELECT $field FROM $table $where $and ORDER BY $orderField $ordering ");
+    $getAll->execute();
+    $all = $getAll->fetchAll();
+    return $all;
+ }
+ 
+
 /*
  * title function v1.0
  * *Page title function that echo page title if the variable $pageTitle is exists
